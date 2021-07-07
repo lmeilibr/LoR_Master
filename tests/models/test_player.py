@@ -55,8 +55,21 @@ def test_checkOpponent():
     pass
 
 
-def test_getNoDuplicate():
-    pass
+@pytest.mark.parametrize(
+    "deck_codes, expected", [
+        (['aaa'], {'aaa': 1}),
+        (['aaa', 'bbb'], {'aaa': 1, 'bbb': 1}),
+        (['aaa', 'bbb', 'aaa'], {'aaa': 2, 'bbb': 1}),
+        (['aaa', 'bbb', 'bbb'], {'aaa': 1, 'bbb': 2}),
+        (['bbb', 'bbb', 'aaa'], {'aaa': 1, 'bbb': 2}),
+    ]
+)
+def test_get_no_duplicate(player, deck_codes, expected):
+    """given a list of deckcodes, return a sorted dictionary with the count of each deck.
+    Assumes that there will be at least on deck code in the list"""
+    result = player.getNoDuplicate(deck_codes)
+
+    assert result == expected
 
 
 def test_inspectPlayer():
